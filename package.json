@@ -1,8 +1,9 @@
+
 {
   "author": {
-    "email": "gajus@gajus.com",
-    "name": "Gajus Kuizinas",
-    "url": "http://gajus.com"
+    "email": "trudan97@gmail.com",
+    "name": "TruDan",
+    "url": "https://github.com/TruDan"
   },
   "bin": "./dist/bin/create-index.js",
   "dependencies": {
@@ -42,7 +43,7 @@
   "name": "create-index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gajus/create-index"
+    "url": "https://github.com/TruDan/create-index"
   },
   "husky": {
     "hooks": {
