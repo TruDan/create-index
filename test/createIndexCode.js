@@ -20,7 +20,10 @@ describe('createIndexCode()', () => {
     expect(indexCode).to.equal(codeExample(`
 // @create-index
 
-export { default as foo } from './foo';
+import foo from './foo';
+
+export { foo };
+export default { foo };
     `));
   });
   it('describes multiple children', () => {
@@ -29,8 +32,11 @@ export { default as foo } from './foo';
     expect(indexCode).to.equal(codeExample(`
 // @create-index
 
-export { default as bar } from './bar';
-export { default as foo } from './foo';
+import bar from './bar';
+import foo from './foo';
+
+export { bar, foo };
+export default { bar, foo };
     `));
   });
   context('file with extension', () => {
@@ -40,7 +46,10 @@ export { default as foo } from './foo';
       expect(indexCode).to.equal(codeExample(`
 // @create-index
 
-export { default as foo } from './foo.js';
+import foo from './foo.js';
+
+export { foo };
+export default { foo };
       `));
     });
   });
@@ -51,8 +60,11 @@ export { default as foo } from './foo.js';
       expect(indexCode).to.equal(codeExample(`
 // @create-index
 
-export { default as bar } from './bar';
-export { default as foo } from './foo';
+import bar from './bar';
+import foo from './foo';
+
+export { bar, foo };
+export default { bar, foo };
       `));
     });
   });
@@ -67,8 +79,11 @@ export { default as foo } from './foo';
       expect(indexCode).to.equal(codeExample(`
 // @create-index {"ignore":["/^zoo/"]}
 
-export { default as bar } from './bar';
-export { default as foo } from './foo';
+import bar from './bar';
+import foo from './foo';
+
+export { bar, foo };
+export default { bar, foo };
       `));
     });
   });

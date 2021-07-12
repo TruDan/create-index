@@ -1,7 +1,7 @@
-import _ from "lodash";
+import _ from 'lodash';
 
 const safeVariableName = (fileName) => {
-  const indexOfDot = fileName.indexOf(".");
+  const indexOfDot = fileName.indexOf('.');
 
   if (indexOfDot === -1) {
     return fileName;
@@ -15,62 +15,63 @@ const buildImportBlock = (files) => {
 
   importBlock = _.map(files, (fileName) => {
     return (
-      "import " + safeVariableName(fileName) + " from './" + fileName + "';"
+      'import ' + safeVariableName(fileName) + ' from \'./' + fileName + '\';'
     );
   });
 
-  importBlock = importBlock.join("\n");
+  importBlock = importBlock.join('\n');
 
   return importBlock;
 };
 
 const buildExportBlock = (files) => {
-  let exportBlock;
+  let exportBlock = '';
 
   // exportBlock += "export ";
-  exportBlock += "{ ";
+  exportBlock += '{ ';
 
-  _.map(files, (fileName) => {
+  exportBlock += _.map(files, (fileName) => {
     return safeVariableName(fileName);
-  }).join(", ");
+  }).join(', ');
 
-  exportBlock += " }";
+  exportBlock += ' }';
 
-  return "export " + exportBlock + ";" + "\n";
-  + "export default " + exportBlock + ";" + "\n";
+  return 'export ' + exportBlock + ';\n' +
+  'export default ' + exportBlock + ';';
 };
 
 export default (filePaths, options = {}) => {
   let code;
   let configCode;
 
-  code = "";
-  configCode = "";
+  code = '';
+  configCode = '';
 
   if (options.banner) {
-    const banners = _.isArray(options.banner)
-      ? options.banner
-      : [options.banner];
+    const banners = _.isArray(options.banner) ?
+      options.banner :
+      [options.banner];
 
     banners.forEach((banner) => {
-      code += banner + "\n";
+      code += banner + '\n';
     });
 
-    code += "\n";
+    code += '\n';
   }
 
   if (options.config && _.size(options.config) > 0) {
-    configCode += " " + JSON.stringify(options.config);
+    configCode += ' ' + JSON.stringify(options.config);
   }
 
-  code += "// @create-index" + configCode + "\n\n";
+  code += '// @create-index' + configCode + '\n\n';
 
   if (filePaths.length) {
     const sortedFilePaths = filePaths.sort();
 
     code += buildImportBlock(sortedFilePaths);
-    code += "\n\n";
+    code += '\n\n';
     code += buildExportBlock(sortedFilePaths);
+    code += '\n\n';
   }
 
   return code;

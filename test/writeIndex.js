@@ -33,9 +33,12 @@ describe('writeIndex()', () => {
     expect(indexCode).to.equal(codeExample(`
 // @create-index
 
-export { default as bar } from './bar';
-export { default as foo } from './foo.js';
-    `));
+import bar from './bar';
+import foo from './foo.js';
+
+export { bar, foo };
+export default { bar, foo };
+`));
   });
 
   it('creates index with config in target directory', () => {
@@ -52,7 +55,10 @@ export { default as foo } from './foo.js';
     expect(indexCode).to.equal(codeExample(`
 // @create-index {"ignore":["/bar.js$/"]}
 
-export { default as foo } from './foo.js';
-    `));
+import foo from './foo.js';
+
+export { foo };
+export default { foo };
+`));
   });
 });

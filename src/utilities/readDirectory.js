@@ -77,7 +77,7 @@ export default (directoryPath, options = {}) => {
   }
 
   const {
-    extensions = ['js','ts','vue'],
+    extensions = ['js', 'ts', 'vue'],
     config = {},
     ignoreDirectories = false,
   } = options;
