@@ -2,5 +2,5 @@
 
 export * from './bar';
 export * from './foo';
-export * from './misc';
+export * from './misc.js';
 

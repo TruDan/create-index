@@ -55,7 +55,7 @@
     "lint": "cross-env NODE_ENV=development eslint ./src ./test",
     "test": "cross-env NODE_ENV=development mocha --require @babel/register"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "bugs": {
     "url": "https://github.com/TruDan/create-index/issues"
   },
