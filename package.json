@@ -1,10 +1,8 @@
 {
-  "author": {
-    "email": "trudan97@gmail.com",
-    "name": "TruDan",
-    "url": "https://github.com/TruDan"
+  "author": "TruDan <trudan97@gmail.com> (https://github.com/TruDan)",
+  "bin": {
+    "create-index": "dist/bin/create-index.js"
   },
-  "bin": "./dist/bin/create-index.js",
   "dependencies": {
     "chalk": "^4.0.0",
     "glob": "^7.1.6",
@@ -41,10 +39,10 @@
   ],
   "license": "BSD-3-Clause",
   "main": "./dist/index.js",
-  "name": "create-index",
+  "name": "@trudan97/create-index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TruDan/create-index"
+    "url": "git+https://github.com/TruDan/create-index.git"
   },
   "husky": {
     "hooks": {
@@ -57,5 +55,12 @@
     "lint": "cross-env NODE_ENV=development eslint ./src ./test",
     "test": "cross-env NODE_ENV=development mocha --require @babel/register"
   },
-  "version": "0.0.0-development"
+  "version": "1.0.0",
+  "bugs": {
+    "url": "https://github.com/TruDan/create-index/issues"
+  },
+  "homepage": "https://github.com/TruDan/create-index#readme",
+  "directories": {
+    "test": "test"
+  }
 }

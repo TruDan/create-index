@@ -1,3 +1,4 @@
+import path from 'path';
 import _ from 'lodash';
 
 const safeVariableName = (fileName) => {
@@ -24,23 +25,35 @@ const buildImportBlock = (files) => {
   return importBlock;
 };
 
-const buildExportBlock = (files) => {
+const buildExportBlock = (files, directoryPath = '') => {
   let exportBlock = '';
+  let defaultExportBlock = '';
+  const directoryName = path.dirname(directoryPath);
 
   // exportBlock += "export ";
   exportBlock += '{ ';
+  defaultExportBlock += '{ ';
 
   exportBlock += _.map(files, (fileName) => {
     return safeVariableName(fileName);
   }).join(', ');
 
+  defaultExportBlock += _.map(files, (fileName) => {
+    if (fileName === directoryName) {
+      return '...' + safeVariableName();
+    } else {
+      return safeVariableName(fileName);
+    }
+  }).join(', ');
+
   exportBlock += ' }';
+  defaultExportBlock += ' }';
 
   return 'export ' + exportBlock + ';\n' +
-  'export default ' + exportBlock + ';';
+  'export default ' + defaultExportBlock + ';';
 };
 
-export default (filePaths, options = {}) => {
+export default (filePaths, options = {}, directoryPath) => {
   let code;
   let configCode;
 
@@ -70,7 +83,7 @@ export default (filePaths, options = {}) => {
 
     code += buildImportBlock(sortedFilePaths);
     code += '\n\n';
-    code += buildExportBlock(sortedFilePaths);
+    code += buildExportBlock(sortedFilePaths, directoryPath);
     code += '\n\n';
   }
 
