@@ -1,4 +1,3 @@
-import path from 'path';
 import _ from 'lodash';
 
 const safeVariableName = (fileName) => {
@@ -12,48 +11,27 @@ const safeVariableName = (fileName) => {
 };
 
 const buildImportBlock = (files) => {
-  let importBlock;
-
-  importBlock = _.map(files, (fileName) => {
-    return (
-      'import ' + safeVariableName(fileName) + ' from \'./' + fileName + '\';'
-    );
-  });
-
-  importBlock = importBlock.join('\n');
-
-  return importBlock;
+  return _.map(files, (fileName) => {
+    return `import ${safeVariableName(fileName)} from './${fileName}';`;
+  }).join('\n');
 };
 
-const buildExportBlock = (files, directoryPath = '') => {
-  let exportBlock = '';
-  let defaultExportBlock = '';
-  const directoryName = path.dirname(directoryPath);
-
-  // exportBlock += "export ";
-  exportBlock += '{ ';
-  defaultExportBlock += '{ ';
-
-  exportBlock += _.map(files, (fileName) => {
+const buildExportBlock = (files) => {
+  const exportBlock = '{ ' + _.map(files, (fileName) => {
     return safeVariableName(fileName);
-  }).join(', ');
-
-  defaultExportBlock += _.map(files, (fileName) => {
-    if (fileName === directoryName) {
-      return '...' + safeVariableName();
-    } else {
-      return safeVariableName(fileName);
-    }
-  }).join(', ');
-
-  exportBlock += ' }';
-  defaultExportBlock += ' }';
+  }).join(', ') + ' }';
 
   return 'export ' + exportBlock + ';\n' +
-  'export default ' + defaultExportBlock + ';';
+  'export default ' + exportBlock + ';';
 };
 
-export default (filePaths, options = {}, directoryPath) => {
+const buildFlattenedBlock = (files) => {
+  return _.map(files, (fileName) => {
+    return `export * from './${fileName}';`;
+  }).join('\n');
+};
+
+export default (filePaths, options = {}) => {
   let code;
   let configCode;
 
@@ -80,10 +58,13 @@ export default (filePaths, options = {}, directoryPath) => {
 
   if (filePaths.length) {
     const sortedFilePaths = filePaths.sort();
-
-    code += buildImportBlock(sortedFilePaths);
-    code += '\n\n';
-    code += buildExportBlock(sortedFilePaths, directoryPath);
+    if (options.config && options.config.flatten) {
+      code += buildFlattenedBlock(sortedFilePaths);
+    } else {
+      code += buildImportBlock(sortedFilePaths);
+      code += '\n\n';
+      code += buildExportBlock(sortedFilePaths);
+    }
     code += '\n\n';
   }
 
