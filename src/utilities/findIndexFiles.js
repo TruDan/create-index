@@ -10,7 +10,7 @@ export default (directoryPath, options = {}) => {
   fileName = options.fileName || 'index.js';
   fileName = './**/' + fileName;
 
-  targetDirectories = glob.sync(path.join(directoryPath, fileName));
+  targetDirectories = glob.sync(path.join(directoryPath, fileName), {ignore: options.ignore});
 
   targetDirectories = _.filter(targetDirectories, (targetDirectoryPath) => {
     return validateTargetDirectory(path.dirname(targetDirectoryPath), {

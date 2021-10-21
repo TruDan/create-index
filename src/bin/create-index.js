@@ -63,6 +63,13 @@ const argv = yargs
       type: 'string',
     },
   })
+  .options({
+    ignore: {
+      default: [],
+      description: 'List of glob paths to exclude from processing.',
+      type: 'array',
+    },
+  })
   .example(
     'create-index ./src ./src/utilities',
     'Creates or updates an existing create-index index file in the target (./src, ./src/utilities) directories.',
@@ -80,6 +87,7 @@ const argv = yargs
 writeIndexCli(argv._, {
   banner: argv.banner,
   extensions: argv.extensions,
+  ignore: argv.ignore,
   ignoreDirectories: argv.ignoreDirectories,
   ignoreUnsafe: argv.ignoreUnsafe,
   outputFile: argv.outputFile,

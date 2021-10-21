@@ -29,6 +29,7 @@ export default (directoryPaths, options = {}) => {
     sortedDirectoryPaths = _.map(sortedDirectoryPaths, (directory) => {
       return findIndexFiles(directory, {
         fileName: options.updateIndex ? options.outputFile || 'index.js' : '*',
+        ignore: options.ignore,
         silent: options.updateIndex || options.ignoreUnsafe,
       });
     });
